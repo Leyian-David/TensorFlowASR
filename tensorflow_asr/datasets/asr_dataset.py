@@ -248,8 +248,8 @@ class ASRDataset(BaseDataset):
         if self.shuffle:
             dataset = dataset.shuffle(self.buffer_size, reshuffle_each_iteration=True)
 
-#         if self.indefinite and self.total_steps:
-        dataset = dataset.repeat()
+        if self.indefinite and self.total_steps:
+            dataset = dataset.repeat()
 
         # PADDED BATCH the dataset
         dataset = dataset.padded_batch(
@@ -410,7 +410,9 @@ class ASRTFRecordDataset(ASRDataset):
         files_ds = files_ds.with_options(ignore_order)
         dataset = tf.data.TFRecordDataset(files_ds, compression_type=self.compression_type, num_parallel_reads=AUTOTUNE)
 
-        return self.process(dataset, batch_size)
+        ds = self.process(dataset, batch_size)
+        ds = ds.repeat()
+        return ds
 
 
 class ASRSliceDataset(ASRDataset):
