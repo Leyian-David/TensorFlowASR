@@ -411,7 +411,7 @@ class ASRTFRecordDataset(ASRDataset):
         dataset = tf.data.TFRecordDataset(files_ds, compression_type=self.compression_type, num_parallel_reads=AUTOTUNE)
 
         ds = self.process(dataset, batch_size)
-        ds = ds.repeat()
+#         ds = ds.repeat()
         return ds
 
 
