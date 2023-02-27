@@ -248,8 +248,8 @@ class ASRDataset(BaseDataset):
         if self.shuffle:
             dataset = dataset.shuffle(self.buffer_size, reshuffle_each_iteration=True)
 
-        if self.indefinite and self.total_steps:
-            dataset = dataset.repeat()
+#         if self.indefinite and self.total_steps:
+        dataset = dataset.repeat()
 
         # PADDED BATCH the dataset
         dataset = dataset.padded_batch(
